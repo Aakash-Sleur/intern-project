@@ -1,0 +1,64 @@
+<section class="dashboard-container">
+  <h2>Welcome to Dashboard</h2>
+
+  <div class="grid-container">
+    @for (cardItem of cardData; track trackByFn) {
+    <mat-card class="grid-item" [style]="cardItem.color" appearance="outlined">
+      <mat-card-header class="card-header">
+        <mat-card-title-group>
+          <mat-card-subtitle style="color: white">{{
+            cardItem.title
+          }}</mat-card-subtitle>
+          <mat-card-title style="color: white">{{
+            cardItem.count
+          }}</mat-card-title>
+        </mat-card-title-group>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <mat-progress-bar
+          class="custom-progress-bar"
+          mode="determinate"
+          value="40"
+        ></mat-progress-bar>
+        <p>{{ cardItem.description }}</p>
+      </mat-card-content>
+    </mat-card>
+    }
+  </div>
+
+  <section class="attendance-section">
+    <ag-charts [options]="options"></ag-charts>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="present">
+        <th mat-header-cell *matHeaderCellDef>Present</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.attendance.present }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="absent">
+        <th mat-header-cell *matHeaderCellDef>Absent</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.attendance.absent }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef>View</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-flat-button color="primary" (click)="viewData(element)">
+            View
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+    </table>
+  </section>
+</section>
